@@ -2,7 +2,7 @@
 import streamlit as st
 from transformers import GPT2Tokenizer, GPT2LMHeadModel
 
-model_name = st.radio('gpt2', ['gpt2', 'gpt2-large'])
+model_name = st.radio('gpt2', ['gpt2', 'gpt2-medium', 'gpt2-large'])
 
 tokenizer = GPT2Tokenizer.from_pretrained(model_name)
 tokenizer.pad_token = tokenizer.eos_token
