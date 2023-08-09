@@ -4,13 +4,7 @@ from transformers import GPT2Tokenizer, GPT2LMHeadModel
 
 model_name = st.radio('gpt2', ['gpt2', 'gpt2-medium', 'gpt2-large'])
 
-tokenizer = GPT2Tokenizer.from_pretrained(model_name)
-tokenizer.pad_token = tokenizer.eos_token
-model = GPT2LMHeadModel.from_pretrained(model_name, pad_token_id=tokenizer.eos_token_id)
-
 input_text = st.text_input('Input text: ')
-
-input_ids = tokenizer.encode(input_text, return_tensors='pt')
 
 max_length = st.number_input('max_length', min_value=1, max_value=None, value=10000)
 num_beams = st.number_input('num_beams', min_value=1, max_value=10, value=5)
@@ -21,7 +15,13 @@ temperature = st.number_input('temperature', min_value=0.0, max_value=10.0, valu
 top_k = st.number_input('top_k', min_value=0, value=50)
 top_p = st.number_input('top_p', min_value=0.0, max_value=1.0, value=1.0)
 
+
 if st.button('Generate!'):
+    tokenizer = GPT2Tokenizer.from_pretrained(model_name)
+    tokenizer.pad_token = tokenizer.eos_token
+    model = GPT2LMHeadModel.from_pretrained(model_name, pad_token_id=tokenizer.eos_token_id)
+    input_ids = tokenizer.encode(input_text, return_tensors='pt')
+
     outputs = model.generate(
         input_ids,
         max_length=max_length,
