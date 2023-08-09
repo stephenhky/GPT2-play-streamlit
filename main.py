@@ -15,7 +15,11 @@ input_ids = tokenizer.encode(input_text, return_tensors='pt')
 max_length = st.number_input('max_length', min_value=1, max_value=None, value=10000)
 num_beams = st.number_input('num_beams', min_value=1, max_value=10, value=5)
 no_repeat_ngram_size = st.number_input('no_repeat_ngram_size', min_value=0, value=2)
+do_sample = st.checkbox('do_sample', False)
 early_stopping = st.checkbox('early_stopping', value=True)
+temperature = st.number_input('temperature', min_value=0.0, max_value=10.0, value=1.0)
+top_k = st.number_input('top_k', min_value=0, value=50)
+top_p = st.number_input('top_p', min_value=0.0, max_value=1.0, value=1.0)
 
 if st.button('Generate!'):
     outputs = model.generate(
@@ -23,7 +27,11 @@ if st.button('Generate!'):
         max_length=max_length,
         num_beams=num_beams,
         no_repeat_ngram_size=no_repeat_ngram_size,
-        early_stopping=early_stopping
+        do_sample=do_sample,
+        early_stopping=early_stopping,
+        temperature=temperature,
+        top_k=top_k,
+        top_p=top_p
     )
 
     generated_text = tokenizer.decode(outputs[0], skip_tokens=True)
