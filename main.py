@@ -4,7 +4,7 @@ from transformers import GPT2Tokenizer, GPT2LMHeadModel
 
 model_name = st.radio('gpt2', ['gpt2', 'gpt2-medium', 'gpt2-large'])
 
-input_text = st.text_input('Input text: ')
+input_text = st.text_area('Input text: ')
 
 max_length = st.number_input('max_length', min_value=1, max_value=None, value=10000)
 num_beams = st.number_input('num_beams', min_value=1, max_value=10, value=5)
